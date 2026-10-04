@@ -61,8 +61,7 @@
   </div>
 
   <script>
-    // PASTE LINK CSV GOOGLE SHEETS KAMU DI SINI:
-    const csvUrl = 'PASTE_LINK_CSV_DISINI';
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/1zpNk6B3II_VNENWt9DDg3TEw6OPuz-p_xAS5Tq4HcAc/export?format=csv';
 
     fetch(csvUrl)
       .then(res => res.text())
@@ -83,10 +82,10 @@
             card.className = 'item-card';
             card.innerHTML = `
               <div>
-                <div class="item-date">📅 ${cols[1]}</div>
-                <div class="item-topic">${cols[2]}</div>
+                <div class="item-date">📅 ${cols[1].replaceAll('"','')}</div>
+                <div class="item-topic">${cols[2] ? cols[2].replaceAll('"','') : ''}</div>
               </div>
-              <span class="status-badge">${cols[3] || 'Hadir'}</span>
+              <span class="status-badge">${cols[3] ? cols[3].replaceAll('"','') : 'Hadir'}</span>
             `;
             absenContainer.appendChild(card);
           }
@@ -98,10 +97,10 @@
             payCard.style.background = '#f8fafc';
             payCard.innerHTML = `
               <div>
-                <div class="item-date">🗓️ Tgl Bayar: ${cols[6]}</div>
+                <div class="item-date">🗓️ Tgl Bayar: ${cols[6].replaceAll('"','')}</div>
                 <div class="item-topic">Lunas / Terverifikasi</div>
               </div>
-              <div class="pay-amount">${cols[7] || ''}</div>
+              <div class="pay-amount">${cols[7] ? cols[7].replaceAll('"','') : ''}</div>
             `;
             payContainer.appendChild(payCard);
           }

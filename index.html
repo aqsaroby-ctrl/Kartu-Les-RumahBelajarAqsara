@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rumah Belajar Aqsara — Prototype</title>
+<style>
+:root{
+  --blue:#2f80ed; --blue2:#56ccf2; --navy:#1f4f8f; --bg:#eef7ff;
+  --green:#39b86f; --yellow:#f2c94c; --red:#eb5757; --text:#24415f;
+  --white:#fff; --muted:#7b93aa; --shadow:0 10px 30px rgba(43,101,153,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#eaf7ff,#f8fbff);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.app{max-width:430px;margin:auto;min-height:100vh}
+.screen{display:none;min-height:100vh}.screen.active{display:block}
+.login{padding:38px 20px;display:flex;align-items:center;justify-content:center}
+.login-card{width:100%;background:white;border-radius:28px;padding:30px 24px;box-shadow:var(--shadow);text-align:center}
+.logo{width:72px;height:72px;border-radius:22px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-size:30px;font-weight:800}
+h1{font-size:22px;margin:4px 0;color:var(--navy)} h2{font-size:18px;margin:0 0 5px;color:var(--navy)}
+.subtitle{font-size:12px;color:var(--muted);margin-bottom:24px}
+.field{text-align:left;margin:12px 0}.field label{font-size:12px;font-weight:700;display:block;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid #d8e8f5;border-radius:13px;outline:none;background:#f9fcff;color:var(--text)}
+.primary{width:100%;padding:13px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-weight:800;margin-top:8px}
+.demo{display:flex;gap:8px;margin-top:12px}.demo button{flex:1;padding:10px;border-radius:12px;background:#eef7ff;color:var(--navy);font-size:12px;font-weight:700}
+.header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;padding:22px 18px 20px;border-radius:0 0 28px 28px}
+.header-row{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;font-size:15px}.role{font-size:11px;background:rgba(255,255,255,.2);padding:6px 9px;border-radius:20px}
+.header h2{color:white;margin-top:18px;font-size:20px}.header p{margin:4px 0 0;font-size:12px;opacity:.9}
+.content{padding:16px}.card{background:white;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 7px 22px rgba(43,101,153,.08)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:#f5fbff;border-radius:15px;padding:12px 6px;text-align:center}.stat b{display:block;font-size:20px;color:var(--navy)}.stat span{font-size:10px;color:var(--muted)}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.section-title h3{margin:0;font-size:14px;color:var(--navy)}
+.small-btn{padding:7px 10px;border-radius:10px;background:#eaf5ff;color:var(--blue);font-size:11px;font-weight:800}
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.month{font-weight:800;color:var(--navy)}
+.month button{background:#edf7ff;color:var(--navy);border-radius:9px;width:30px;height:30px;margin:0 3px}
+.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.week div{text-align:center;font-size:9px;color:var(--muted);font-weight:700;padding-bottom:3px}
+.day{min-height:42px;border-radius:11px;background:#f7fbfe;border:1px solid #edf4f9;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;position:relative}
+.day.empty{background:transparent;border:0}.day.sun{background:#ffecec;color:#e26b6b;border-color:#ffd6d6}.day.hadir{background:#e8f8ef;color:#16854b;border-color:#bce9cf}.day.izin{background:#fff7d9;color:#9a7a00;border-color:#f5e29b}
+.day.editable{cursor:pointer}.day .dot{position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:currentColor}
+.legend{display:flex;gap:12px;font-size:10px;color:var(--muted);margin-top:10px}.legend span{display:flex;align-items:center;gap:4px}.lg{width:9px;height:9px;border-radius:3px}.lg.g{background:#bce9cf}.lg.y{background:#f5e29b}.lg.r{background:#ffd6d6}
+.list-item{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #edf3f7}.list-item:last-child{border-bottom:0}.item-main b{font-size:12px;display:block}.item-main span{font-size:10px;color:var(--muted)}.amount{font-weight:800;font-size:12px;color:var(--green)}
+.note{background:#f6fbff;border-left:4px solid var(--blue);padding:10px;border-radius:9px;font-size:11px;line-height:1.5}
+.nav{position:sticky;bottom:0;background:white;border-top:1px solid #e6f0f7;padding:8px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;box-shadow:0 -5px 20px rgba(43,101,153,.07)}
+.nav button{background:white;color:#8aa0b4;font-size:9px;padding:7px 2px;border-radius:10px}.nav button.active{background:#edf7ff;color:var(--blue);font-weight:800}
+.logout{background:rgba(255,255,255,.18);color:#fff;border-radius:10px;padding:7px 9px;font-size:10px}
+.modal{position:fixed;inset:0;background:rgba(22,58,92,.38);display:none;align-items:flex-end;justify-content:center;z-index:10}.modal.show{display:flex}
+.modal-box{width:min(430px,100%);background:white;border-radius:25px 25px 0 0;padding:20px}.modal-box h3{margin:0 0 15px;color:var(--navy)}
+.actions{display:flex;gap:8px;margin-top:12px}.actions button{flex:1;padding:11px;border-radius:12px;font-weight:800}.save{background:var(--blue);color:white}.cancel{background:#eef5fa;color:var(--text)}
+.toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#214f7d;color:white;padding:10px 14px;border-radius:12px;font-size:11px;display:none;z-index:20}
+.readonly{font-size:10px;background:#f3f8fc;padding:7px 10px;border-radius:10px;color:#6e879c;margin-bottom:10px}
+@media(min-width:600px){body{padding:20px}.app{border-radius:30px;overflow:hidden;box-shadow:0 15px 45px rgba(43,101,153,.12)}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<section id="login" class="screen active login">
+  <div class="login-card">
+    <div class="logo">A</div>
+    <h1>Rumah Belajar Aqsara</h1>
+    <div class="subtitle">Kartu Les Digital • Aisyah Putri</div>
+    <div class="card" style="box-shadow:none;background:#f6fbff;margin:18px 0;text-align:left">
+      <div style="font-size:12px;font-weight:800;color:#24415f">👋 Selamat datang, Ayah/Bunda</div>
+      <div style="font-size:10px;color:#7b93aa;line-height:1.5;margin-top:5px">
+        Halaman khusus untuk melihat perkembangan belajar Aisyah. Tidak perlu login dan data hanya dapat dilihat.
+      </div>
+    </div>
+    <button class="primary" onclick="openParent()">📖 Lihat Kartu Les Aisyah</button>
+    <button style="width:100%;margin-top:10px;padding:11px;border-radius:12px;background:#eef5fa;color:#24415f;font-weight:700" onclick="openAdminLogin()">🔐 Masuk sebagai Tutor/Admin</button>
+    <div style="font-size:9px;color:#9aabba;margin-top:15px">Link ini nantinya dapat dibagikan langsung kepada wali murid.</div>
+  </div>
+</section>
+
+<section id="adminLogin" class="screen login">
+  <div class="login-card">
+    <div class="logo">A</div>
+    <h1>Login Tutor</h1>
+    <div class="subtitle">Halaman khusus Rumah Belajar Aqsara</div>
+    <div class="field"><label>Email / ID</label><input id="adminId" value="tutor@aqsara.id"></div>
+    <div class="field"><label>Password</label><input id="adminPass" type="password" value="123456"></div>
+    <button class="primary" onclick="adminLogin()">Masuk ke Dashboard Admin</button>
+    <button style="width:100%;margin-top:10px;padding:11px;border-radius:12px;background:#eef5fa;color:#24415f;font-weight:700" onclick="backToParent()">← Kembali ke Halaman Wali</button>
+  </div>
+</section>
+
+<section id="dashboard" class="screen">
+  <header class="header">
+    <div class="header-row"><div class="brand">🏠 Rumah Belajar Aqsara</div><button class="logout" id="topButton" onclick="logout()">Kembali</button></div>
+    <h2 id="welcome">Halo, Tutor 👋</h2><p id="roleText">Mode Admin/Tutor</p>
+  </header>
+  <main class="content"><div id="parentBanner" class="readonly" style="display:none">🔒 Mode Wali Murid — data hanya dapat dilihat.</div>
+    <div class="card">
+      <div class="section-title"><h3>👧 Data Siswa</h3><button class="small-btn" id="editStudent" onclick="editStudent()">Edit</button></div>
+      <div style="font-size:13px;font-weight:800;color:#24415f">Aisyah Putri</div>
+      <div style="font-size:10px;color:#7b93aa;margin-top:3px">Kelas 4 SD • Program Les Matematika</div>
+    </div>
+    <div class="card">
+      <div class="section-title"><h3>📊 Ringkasan</h3></div>
+      <div class="stats">
+        <div class="stat"><b id="hadirCount">0</b><span>Hadir</span></div>
+        <div class="stat"><b id="izinCount">0</b><span>Izin</span></div>
+        <div class="stat"><b id="meetCount">0</b><span>Pertemuan</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title"><h3>📅 Absensi</h3><button class="small-btn" id="addAttendance" onclick="openAttendance()">+ Isi</button></div>
+      <div id="readonlyNote" class="readonly" style="display:none">🔒 Tampilan wali murid — data hanya dapat dilihat.</div>
+      <div class="calendar-head"><div class="month" id="monthLabel"></div><div><button onclick="changeMonth(-1)">‹</button><button onclick="changeMonth(1)">›</button></div></div>
+      <div class="week"><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div></div>
+      <div class="days" id="calendar"></div>
+      <div class="legend"><span><i class="lg g"></i>Hadir</span><span><i class="lg y"></i>Izin</span><span><i class="lg r"></i>Libur</span></div>
+    </div>
+    <div class="card">
+      <div class="section-title"><h3>💰 Pembayaran</h3><button class="small-btn" id="addPayment" onclick="addPayment()">+ Tambah</button></div>
+      <div id="payments"></div>
+    </div>
+    <div class="card">
+      <div class="section-title"><h3>📝 Catatan Belajar</h3><button class="small-btn" id="addNote" onclick="addNote()">+ Tambah</button></div>
+      <div id="notes"></div>
+    </div>
+  </main>
+  <nav class="nav">
+    <button class="active">🏠<br>Beranda</button><button onclick="scrollToCard('calendar')">📅<br>Absensi</button><button onclick="scrollToCard('payments')">💰<br>Bayar</button><button onclick="scrollToCard('notes')">📝<br>Catatan</button>
+  </nav>
+</section>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box" id="modalContent"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let role='tutor', current=new Date(2026,9,1);
+let attendance = {
+  '2026-10-01':'hadir','2026-10-02':'hadir','2026-10-05':'hadir','2026-10-07':'izin','2026-10-08':'hadir','2026-10-10':'hadir'
+};
+let payments=[
+  {date:'01 Oktober 2026',desc:'Pembayaran Les Oktober',amount:'Rp200.000'},
+  {date:'01 September 2026',desc:'Pembayaran Les September',amount:'Rp200.000'}
+];
+let notes=[
+  {date:'10 Oktober 2026',text:'Aisyah sudah lebih lancar mengerjakan penjumlahan dan pengurangan cara panjang.'},
+  {date:'08 Oktober 2026',text:'Materi: Kelipatan dan Faktor. Perlu latihan tambahan pada soal cerita.'}
+];
+
+function openParent(){role='wali';showDashboard()}
+function openAdminLogin(){document.getElementById('login').classList.remove('active');document.getElementById('adminLogin').classList.add('active')}
+function backToParent(){document.getElementById('adminLogin').classList.remove('active');document.getElementById('login').classList.add('active')}
+function adminLogin(){role='tutor';showDashboard()}
+function showDashboard(){
+ document.getElementById('login').classList.remove('active');
+ document.getElementById('adminLogin').classList.remove('active');
+ document.getElementById('dashboard').classList.add('active');
+ const tutor=role==='tutor';
+ document.getElementById('welcome').textContent=tutor?'Halo, Tutor 👋':'Halo, Ayah/Bunda 👋';
+ document.getElementById('roleText').textContent=tutor?'Mode Admin/Tutor • Bisa mengedit data':'Kartu Les Digital • Tampilan wali murid';
+ document.getElementById('topButton').textContent=tutor?'Keluar':'Kembali';
+ ['editStudent','addAttendance','addPayment','addNote'].forEach(id=>document.getElementById(id).style.display=tutor?'inline-block':'none');
+ document.getElementById('readonlyNote').style.display=tutor?'none':'block';
+ document.getElementById('parentBanner').style.display=tutor?'none':'block';
+ renderAll();
+}
+function logout(){
+ document.getElementById('dashboard').classList.remove('active');
+ document.getElementById('adminLogin').classList.remove('active');
+ document.getElementById('login').classList.add('active');
+}
+function key(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`}
+function renderAll(){renderCalendar();renderPayments();renderNotes();updateStats()}
+function renderCalendar(){
+ const y=current.getFullYear(),m=current.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0);
+ document.getElementById('monthLabel').textContent=new Intl.DateTimeFormat('id-ID',{month:'long',year:'numeric'}).format(current);
+ let start=(first.getDay()+6)%7, out='';
+ for(let i=0;i<start;i++)out+='<div class="day empty"></div>';
+ for(let d=1;d<=last.getDate();d++){
+   let dt=new Date(y,m,d), sun=dt.getDay()===0, k=key(y,m,d), st=attendance[k]||'';
+   let cls='day '+(sun?'sun ':st);
+   let click=(!sun && role==='tutor')?`onclick="openAttendance('${k}')"`:'';
+   let label=sun?'Libur':'';
+   out+=`<div class="${cls}" ${click} title="${sun?'Libur':''}">${d}${st?'<span class="dot"></span>':''}</div>`;
+ }
+ document.getElementById('calendar').innerHTML=out;
+}
+function changeMonth(n){current.setMonth(current.getMonth()+n);renderCalendar()}
+function openAttendance(k){
+ if(role!=='tutor')return;
+ if(!k){k=key(current.getFullYear(),current.getMonth(),new Date().getDate())}
+ const [y,m,d]=k.split('-');
+ document.getElementById('modalContent').innerHTML=`
+ <h3>📅 Isi Absensi</h3>
+ <div class="field"><label>Tanggal</label><input id="attDate" type="date" value="${k}"></div>
+ <div class="field"><label>Status</label><select id="attStatus"><option value="hadir" ${attendance[k]==='hadir'?'selected':''}>🟢 Hadir</option><option value="izin" ${attendance[k]==='izin'?'selected':''}>🟡 Izin</option></select></div>
+ <div class="field"><label>Catatan (opsional)</label><textarea id="attNote" rows="3" placeholder="Contoh: hadir tepat waktu">${''}</textarea></div>
+ <div class="actions"><button class="cancel" onclick="closeModal()">Batal</button><button class="save" onclick="saveAttendance()">Simpan</button></div>`;
+ document.getElementById('modal').classList.add('show');
+}
+function saveAttendance(){
+ let k=document.getElementById('attDate').value;
+ if(k){attendance[k]=document.getElementById('attStatus').value;showToast('Absensi berhasil disimpan');closeModal();renderAll()}
+}
+function addPayment(){
+ if(role!=='tutor')return;
+ document.getElementById('modalContent').innerHTML=`<h3>💰 Tambah Pembayaran</h3>
+ <div class="field"><label>Tanggal</label><input id="payDate" type="date" value="${key(2026,9,3)}"></div>
+ <div class="field"><label>Keterangan</label><input id="payDesc" value="Pembayaran Les"></div>
+ <div class="field"><label>Nominal</label><input id="payAmount" value="Rp200.000"></div>
+ <div class="actions"><button class="cancel" onclick="closeModal()">Batal</button><button class="save" onclick="savePayment()">Simpan</button></div>`;
+ document.getElementById('modal').classList.add('show');
+}
+function savePayment(){let d=document.getElementById('payDate').value;payments.unshift({date:new Date(d).toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}),desc:document.getElementById('payDesc').value,amount:document.getElementById('payAmount').value});closeModal();renderPayments();showToast('Pembayaran berhasil ditambahkan')}
+function renderPayments(){document.getElementById('payments').innerHTML=payments.map(p=>`<div class="list-item"><div class="item-main"><b>${p.desc}</b><span>${p.date}</span></div><div class="amount">${p.amount}</div></div>`).join('')}
+function addNote(){
+ if(role!=='tutor')return;
+ document.getElementById('modalContent').innerHTML=`<h3>📝 Tambah Catatan Belajar</h3>
+ <div class="field"><label>Tanggal</label><input id="noteDate" type="date" value="${key(2026,9,3)}"></div>
+ <div class="field"><label>Catatan</label><textarea id="noteText" rows="4" placeholder="Tuliskan perkembangan belajar siswa..."></textarea></div>
+ <div class="actions"><button class="cancel" onclick="closeModal()">Batal</button><button class="save" onclick="saveNote()">Simpan</button></div>`;
+ document.getElementById('modal').classList.add('show');
+}
+function saveNote(){let d=document.getElementById('noteDate').value;notes.unshift({date:new Date(d).toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}),text:document.getElementById('noteText').value||'Catatan belajar siswa.'});closeModal();renderNotes();showToast('Catatan berhasil ditambahkan')}
+function renderNotes(){document.getElementById('notes').innerHTML=notes.map(n=>`<div style="margin-bottom:9px"><div style="font-size:10px;color:#7b93aa;margin-bottom:4px">${n.date}</div><div class="note">${n.text}</div></div>`).join('')}
+function updateStats(){let h=Object.values(attendance).filter(x=>x==='hadir').length,i=Object.values(attendance).filter(x=>x==='izin').length;document.getElementById('hadirCount').textContent=h;document.getElementById('izinCount').textContent=i;document.getElementById('meetCount').textContent=h+i}
+function editStudent(){if(role!=='tutor')return;document.getElementById('modalContent').innerHTML=`<h3>👧 Edit Data Siswa</h3><div class="field"><label>Nama Siswa</label><input value="Aisyah Putri"></div><div class="field"><label>Kelas</label><input value="4 SD"></div><div class="field"><label>Program</label><input value="Les Matematika"></div><div class="actions"><button class="cancel" onclick="closeModal()">Batal</button><button class="save" onclick="closeModal();showToast('Data siswa disimpan')">Simpan</button></div>`;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function showToast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1800)}
+function scrollToCard(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'center'})}
+renderAll();
+</script>
+</body>
+  </html>
+  

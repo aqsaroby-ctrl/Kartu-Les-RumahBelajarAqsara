@@ -3,143 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rumah Belajar Aqsara - Kartu Les Digital</title>
+  <title>Kartu Les Digital - Rumah Belajar Aqsara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2f80ed;
-      --bg: #f4f7fe;
+      --primary: #4f46e5;
+      --primary-light: #eef2ff;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text: #333333;
-      --green: #27ae60;
-      --yellow: #f2994a;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --green: #10b981;
+      --green-bg: #ecfdf5;
     }
-    body {
-      font-family: Arial, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 15px;
-    }
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    h1 {
-      font-size: 20px;
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: 5px;
-    }
-    .subtitle {
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 20px;
-    }
-    .info-box {
-      background: #eef5ff;
-      padding: 12px 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    .info-box strong {
-      color: #111;
-    }
-    h2 {
-      font-size: 16px;
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 5px;
-      margin-top: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 13px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: var(--primary);
-      color: white;
-    }
-    .badge-hadir {
-      background: #e8f8f0;
-      color: var(--green);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: bold;
-    }
-    .footer-note {
-      font-size: 11px;
-      color: #888;
-      text-align: center;
-      margin-top: 25px;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); padding: 16px; display: flex; justify-content: center; }
+    .app-card { width: 100%; max-width: 430px; background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+    .header { text-align: center; margin-bottom: 20px; }
+    .badge-brand { background: var(--primary-light); color: var(--primary); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; }
+    .student-name { font-size: 22px; font-weight: 700; color: var(--text-main); margin-top: 8px; }
+    .student-info { font-size: 13px; color: var(--text-sub); }
+
+    .sec-title { font-size: 14px; font-weight: 600; margin: 18px 0 10px 0; color: var(--primary); display: flex; align-items: center; justify-content: space-between; }
+    .timeline { display: flex; flex-direction: column; gap: 8px; }
+    
+    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+    .item-date { font-size: 11px; color: var(--text-sub); font-weight: 500; }
+    .item-topic { font-size: 13px; font-weight: 600; color: var(--text-main); margin-top: 2px; }
+    .status-badge { background: var(--green-bg); color: var(--green); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 8px; }
+    .pay-amount { font-size: 13px; font-weight: 700; color: #2563eb; }
+    
+    .loading { text-align: center; font-size: 12px; color: var(--text-sub); padding: 15px; }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>RUMAH BELAJAR AQSARA</h1>
-    <div class="subtitle">Kartu Presensi & Laporan Belajar Digital</div>
-
-    <!-- INFORMASI SISWA -->
-    <div class="info-box">
-      <strong>Nama Siswa:</strong> Nada Cinta<br>
-      <strong>Kelas:</strong> 3 SD<br>
-      <strong>Jenis Les:</strong> Les Umum<br>
-      <strong>Jadwal:</strong> Senin, Selasa, Rabu, Kamis, Jumat, Sabtu (15.30 WIB)
+  <div class="app-card">
+    <div class="header">
+      <span class="badge-brand">Rumah Belajar Aqsara</span>
+      <h1 class="student-name">Nada</h1>
+      <p class="student-info">Bimbingan Belajar Privat</p>
     </div>
 
-    <!-- RIWAYAT PRESENSI & MATERI -->
-    <h2>Riwayat Presensi & Materi</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Tanggal</th>
-          <th>Materi Belajar</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>01 Okt 2026</td>
-          <td>Latihan Soal Matematika Bab 2</td>
-          <td><span class="badge-hadir">Hadir</span></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>04 Okt 2026</td>
-          <td>Membaca & Memahami Teks Bahasa Indonesia</td>
-          <td><span class="badge-hadir">Hadir</span></td>
-        </tr>
-        <!-- Tambahkan baris baru di sini jika ada pertemuan berikutnya -->
-      </tbody>
-    </table>
-
-    <!-- STATUS PEMBAYARAN -->
-    <h2>Status Pembayaran / SPP</h2>
-    <div class="info-box" style="background: #eafaf1; border-left: 4px solid var(--green);">
-      <strong>Bulan:</strong> Oktober 2026<br>
-      <strong>Status:</strong> <span style="color: var(--green); font-weight: bold;">LUNAS</span>
+    <!-- RIWAYAT PEMBAYARAN -->
+    <div class="sec-title">
+      <span>💳 Riwayat Pembayaran / Top Up</span>
     </div>
+    <div id="loadingPay" class="loading">Memuat riwayat bayar...</div>
+    <div class="timeline" id="payList"></div>
 
-    <div class="footer-note">
-      *Data ini diperbarui secara resmi oleh Tutor Rumah Belajar Aqsara.
+    <!-- RIWAYAT PRESENSI -->
+    <div class="sec-title">
+      <span>📚 Riwayat Pertemuan & Materi</span>
     </div>
+    <div id="loadingAbsen" class="loading">Memuat data presensi...</div>
+    <div class="timeline" id="absenList"></div>
   </div>
 
+  <script>
+    // PASTE LINK CSV GOOGLE SHEETS KAMU DI SINI:
+    const csvUrl = 'PASTE_LINK_CSV_DISINI';
+
+    fetch(csvUrl)
+      .then(res => res.text())
+      .then(data => {
+        const rows = data.split('\n');
+        const absenContainer = document.getElementById('absenList');
+        const payContainer = document.getElementById('payList');
+        
+        absenContainer.innerHTML = '';
+        payContainer.innerHTML = '';
+
+        rows.slice(1).forEach(row => {
+          const cols = row.split(',');
+
+          // 1. Baca Data Presensi (Kolom B, C, D)
+          if (cols[1] && cols[1].trim() !== '') {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.innerHTML = `
+              <div>
+                <div class="item-date">📅 ${cols[1]}</div>
+                <div class="item-topic">${cols[2]}</div>
+              </div>
+              <span class="status-badge">${cols[3] || 'Hadir'}</span>
+            `;
+            absenContainer.appendChild(card);
+          }
+
+          // 2. Baca Data Pembayaran (Kolom G dan H)
+          if (cols[6] && cols[6].trim() !== '') {
+            const payCard = document.createElement('div');
+            payCard.className = 'item-card';
+            payCard.style.background = '#f8fafc';
+            payCard.innerHTML = `
+              <div>
+                <div class="item-date">🗓️ Tgl Bayar: ${cols[6]}</div>
+                <div class="item-topic">Lunas / Terverifikasi</div>
+              </div>
+              <div class="pay-amount">${cols[7] || ''}</div>
+            `;
+            payContainer.appendChild(payCard);
+          }
+        });
+
+        document.getElementById('loadingAbsen').style.display = 'none';
+        document.getElementById('loadingPay').style.display = 'none';
+      })
+      .catch(() => {
+        document.getElementById('loadingAbsen').innerText = 'Gagal memuat data presensi.';
+        document.getElementById('loadingPay').innerText = 'Gagal memuat data pembayaran.';
+      });
+  </script>
 </body>
 </html>
